@@ -32,11 +32,12 @@ class PostController extends Controller
 
         $data = $request->only(['title', 'author', 'article']);
 
-        return Post::create($request->all());
+        // --- FIXED: Removed the early return that was here ---
 
         if($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOtiginalName();
+            // --- FIXED: Typo Otiginal -> Original ---
+            $imageName = time() . '_' . $image->getClientOriginalName();
             $imagePath = $image->storeAs('posts', $imageName, 'public');
             $data['image'] = $imagePath;
         }
